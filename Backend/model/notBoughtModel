@@ -1,0 +1,22 @@
+const mongoose = require("mongoose");
+
+const notBoughtSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    itemName: {
+      type: String,
+      required: true,
+    },
+    quantity: Number,
+    price: Number,
+  },
+  { timestamps: true },
+);
+
+notBoughtSchema.index({ createdAt: 1 }, { expireAfterSeconds: 2592000 });
+
+module.exports = mongoose.model("NotBoughtItem", notBoughtSchema);

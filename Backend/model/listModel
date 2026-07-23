@@ -1,0 +1,39 @@
+const mongoose = require("mongoose");
+
+const itemSchema = new mongoose.Schema({
+  itemName: {
+    type: String,
+    required: true,
+  },
+  quantity: Number,
+  price: Number,
+  isBought: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const shoppingListSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    items: [itemSchema],
+    status: {
+      type: String,
+      enum: ["active", "completed"],
+      default: "active",
+    },
+    total: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { timestamps: true },
+);
+
+shoppingListSchema.index({ updatedAt: 1 }, { expireAfterSeconds: 2592000 });
+
+module.exports = mongoose.model("List", shoppingListSchema);
