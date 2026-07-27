@@ -1,0 +1,153 @@
+const List = require("../model/listModel");
+const NotBoughtItem = require("../model/notBoughtModel");
+
+module.exports.getActiveLists = async (req, res) => {
+  try {
+    let lists = await List.findOne({ user: req.user.id, status: "active" });
+
+    if (!lists) {
+      lists = await List.create({ user: req.user.id, items: [] });
+    }
+    res.status(200).json(lists);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error fetching active list", error: err.message });
+  }
+};
+
+module.exports.addItem = async (req, res) => {
+  try {
+    const { itemName, quantity, price } = req.body;
+
+    if (!itemName) {
+      return res.status(400).json({ message: "Item name is required" });
+    }
+    let list = await List.findOne({ user: req.user.id, status: "active" });
+    if (!list) {
+      list = await List.create({ user: req.user.id, items: [] });
+    }
+
+    list.items.push({ itemName, quantity, price });
+    await list.save();
+
+    res.status(201).json(list);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error adding item to list", error: err.message });
+  }
+};
+
+module.exports.editItem = async (req, res) => {
+  try {
+    const { itemId } = req.params;
+    const { itemName, quantity, price } = req.body;
+
+    const list = await List.findOne({ user: req.user.id, status: "active" });
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+
+    const item = list.items.id(itemId);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    if (itemName !== undefined) item.itemName = itemName;
+    if (quantity !== undefined) item.quantity = quantity;
+    if (price !== undefined) item.price = price;
+
+    await list.save();
+    res.status(200).json(list);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error editing item in list", error: err.message });
+  }
+};
+
+module.exports.deleteItem = async (req, res) => {
+  try {
+    const { itemId } = req.params;
+
+    const list = await List.findOne({ user: req.user.id, status: "active" });
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+
+    const item = list.items.id(itemId);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    list.items.pull(item);
+    await list.save();
+    res.status(200).json(list);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error deleting item from list", error: err.message });
+  }
+};
+
+module.exports.toggleBought = async (req, res) => {
+  try {
+    const { itemId } = req.params;
+
+    const list = await List.findOne({ user: req.user.id, status: "active" });
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+    const item = list.items.id(itemId);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    if (!item.isBought && (item.price === undefined || item.price === null)) {
+      return res
+        .status(400)
+        .json({ message: "Price is required to mark item as bought" });
+    }
+    item.isBought = !item.isBought;
+    await list.save();
+    res.status(200).json(list);
+  } catch (err) {
+    res.status(500).json({
+      message: "Error toggling item bought status",
+      error: err.message,
+    });
+  }
+};
+
+module.exports.markListDone = async (req, res) => {
+  try {
+    const list = await List.findOne({ user: req.user.id, status: "active" });
+    if (!list) {
+      return res.status(404).json({ message: "List not found" });
+    }
+    const total = list.items
+      .filter((item) => item.isBought)
+      .reduce((sum, item) => sum + (item.price || 0), 0);
+
+    const unBoughtItems = list.items.filter((item) => !item.isBought);
+
+    if (unBoughtItems.length > 0) {
+      const notBoughtDocs = unBoughtItems.map((item) => ({
+        user: req.user.id,
+        itemName: item.itemName,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+      await NotBoughtItem.insertMany(notBoughtDocs);
+    }
+
+    list.status = " Completed";
+    list.total = total;
+    await list.save();
+    res.status(200).json({ message: "List marked as done" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error marking list as done", error: err.message });
+  }
+};
