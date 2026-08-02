@@ -13,6 +13,10 @@ const notBoughtSchema = new mongoose.Schema(
     },
     quantity: Number,
     price: Number,
+    isBought: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const auth = require("../middlewares/authMiddleware");
 const {
-  getActiveList,
+  getActiveLists,
   addItem,
   editItem,
   deleteItem,
@@ -10,7 +10,7 @@ const {
   markListDone,
 } = require("../controllers/listController");
 
-router.get("/", auth, getActiveList);
+router.get("/", auth, getActiveLists);
 router.post("/item", auth, addItem);
 router.put("/item/:itemId", auth, editItem);
 router.delete("/item/:itemId", auth, deleteItem);
