@@ -5,8 +5,8 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantity: Number,
-  price: Number,
+  quantity: { type: Number, default: 0 },
+  price: { type: Number, default: null },
   isBought: {
     type: Boolean,
     default: false,
@@ -15,6 +15,11 @@ const itemSchema = new mongoose.Schema({
 
 const shoppingListSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      default: "Shopping List",
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
