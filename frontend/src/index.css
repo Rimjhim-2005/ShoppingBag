@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  font-family: "Press Start 2P", cursive;
+}
+
 @theme {
   --color-neutral-950: #121212;
   --color-neutral-100: #d9d9d9;
@@ -37,4 +41,10 @@
   --color-accent-700: #4d911a;
   --color-accent-800: #3a6c13;
   --color-accent-900: #26480d;
+
+  --shadow-pop: 10px 10px #676767;
+}
+
+@utility icon-filled {
+  font-variation-settings: "FILL" 1;
 }

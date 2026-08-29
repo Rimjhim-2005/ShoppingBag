@@ -1,0 +1,100 @@
+const mockShoppingLists = [
+  {
+    _id: "66c8a1f2e4b0c9d1a7f30001",
+    user: "66c89f10e4b0c9d1a7f30000",
+    name: "Weekly Groceries",
+    items: [
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30001",
+        itemName: "Milk",
+        quantity: 1,
+        price: 3.49,
+        isBought: true,
+      },
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30002",
+        itemName: "Eggs",
+        quantity: 12,
+        price: 4.99,
+        isBought: false,
+      },
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30003",
+        itemName: "Whole wheat bread",
+        quantity: 1,
+        price: 2.79,
+        isBought: false,
+      },
+    ],
+    status: "active",
+    total: 11.27,
+    createdAt: "2026-08-22T09:30:00.000Z",
+    updatedAt: "2026-08-25T08:15:00.000Z",
+  },
+  {
+    _id: "66c8a1f2e4b0c9d1a7f30002",
+    user: "66c89f10e4b0c9d1a7f30000",
+    name: "Dinner Party",
+    items: [
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30004",
+        itemName: "Chicken breast",
+        quantity: 2,
+        price: 12.5,
+        isBought: true,
+      },
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30005",
+        itemName: "Brown rice",
+        quantity: 1,
+        price: 5.49,
+        isBought: true,
+      },
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30006",
+        itemName: "Broccoli",
+        quantity: 2,
+        price: 3.98,
+        isBought: true,
+      },
+    ],
+    status: "completed",
+    total: 21.97,
+    createdAt: "2026-08-18T17:45:00.000Z",
+    updatedAt: "2026-08-20T12:10:00.000Z",
+  },
+  {
+    _id: "66c8a1f2e4b0c9d1a7f30003",
+    user: "66c89f10e4b0c9d1a7f30000",
+    name: "Household Supplies",
+    items: [
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30007",
+        itemName: "Laundry detergent",
+        quantity: 1,
+        price: 10.99,
+        isBought: false,
+      },
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30008",
+        itemName: "Paper towels",
+        quantity: 2,
+        price: 8.49,
+        isBought: false,
+      },
+      {
+        _id: "76c8a1f2e4b0c9d1a7f30009",
+        itemName: "Dish soap",
+        quantity: 1,
+        price: 3.25,
+        isBought: false,
+      },
+    ],
+    status: "active",
+    total: 22.73,
+    createdAt: "2026-08-24T14:20:00.000Z",
+    updatedAt: "2026-08-24T14:20:00.000Z",
+  },
+];
+
+export default mockShoppingLists;
