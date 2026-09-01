@@ -4,9 +4,9 @@ const ShoppingList = (listData) => {
   const { list } = listData;
   return (
     <div>
-      <div className="flex flex-col mx-auto aspect-700/535 w-full max-w-175 rounded-lg bg-neutral-100 shadow-pop">
-        <div className="flex justify-between gap-6">
-          <div className="border-1 rounded-lg p-1 text-sm p-2">
+      <div className="flex flex-col justify-between mx-auto aspect-700/535 w-full max-w-175 rounded-lg bg-neutral-100 shadow-pop">
+        <div className="flex justify-between gap-6 p-3 items-center">
+          <div className="border rounded-full text-sm py-2 px-3">
             <span>Edit</span>
           </div>
           <div className="text-base font-bold text-neutral-950 m-auto">
@@ -14,28 +14,53 @@ const ShoppingList = (listData) => {
           </div>
           <ActiveStatus status={list.status} />
         </div>
-        <hr className="my-4"></hr>
-        <table className="table-auto text-sm">
-          <thead>
-            <tr>
-              <th>ITEMS</th>
-              <th>QUANTITY</th>
-              <th>PRICE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.items.map((item) => (
-              <tr key={item._id}>
-                <td className="flex flex-row gap-2 items-center">
-                  <div className="rounded-full bg-neutral-950 w-2 h-2" />
-                  {item.itemName}
-                </td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
+        <hr className="mb-2"></hr>
+        <div className="overflow-x-auto">
+          <table className="table-auto text-sm border-collapse border-spacing-0">
+            <thead>
+              <tr>
+                <th className="border-0 px-4 py-1 text-left">ITEMS</th>
+                <th className="border-0 px-2 py-1 text-center">QUANTITY</th>
+                <th className="border-0 px-2 py-1 text-center">PRICE</th>
+                <th className="border-0 px-2 py-1 text-center">
+                  <span className="sr-only">Actions</span>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-xs">
+              {list.items.map((item) => (
+                <tr key={item._id}>
+                  <td className="flex flex-row gap-2 items-center px-2 py-1">
+                    <div className="rounded-full bg-neutral-950 w-2 h-2 wrap-break-word" />
+                    {item.itemName}
+                  </td>
+                  <td className="justify-center border-0 px-2 py-1">
+                    {item.quantity}
+                  </td>
+                  <td className="border-0 px-2 py-1">{item.price}</td>
+                  <td className="border-0 px-2 py-1">
+                    <input
+                      type="checkbox"
+                      className="shopping-checkbox"
+                    ></input>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex justify-between p-3 mt-auto">
+          <span>Expenditure :</span>
+          <span>
+            Rs.
+            {list.items
+              .reduce((total, item) => total + item.price, 0)
+              .toFixed(2)}
+          </span>
+        </div>
+        <div className="btn-primary text-sm rounded-lg mx-auto mt-2 mb-6 cursor-pointer select-none">
+          Mark as done
+        </div>
       </div>
     </div>
   );

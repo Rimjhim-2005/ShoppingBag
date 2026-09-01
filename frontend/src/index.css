@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 body {
   font-family: "Press Start 2P", cursive;
@@ -42,9 +43,51 @@ body {
   --color-accent-800: #3a6c13;
   --color-accent-900: #26480d;
 
-  --shadow-pop: 10px 10px #676767;
+  --shadow-pop: 7px 10px #676767;
 }
 
 @utility icon-filled {
   font-variation-settings: "FILL" 1;
+}
+
+@layer components {
+  .shopping-checkbox {
+    @apply bg-primary-500 border-0 rounded-sm;
+    box-shadow: 2px 2px #676767;
+    transition:
+      transform 60ms ease,
+      box-shadow 60ms ease;
+    cursor: pointer;
+
+    @variant hover {
+      @apply bg-primary-600;
+      transform: translate(-1px, -1px);
+    }
+  }
+  .shopping-checkbox:checked {
+    @apply bg-secondary-500 text-neutral-950;
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px #676767;
+    cursor: pointer;
+    @variant hover {
+      @apply bg-secondary-600;
+    }
+  }
+  .btn-primary {
+    @apply bg-primary-500 text-neutral-950 p-5 rounded-md w-fit inline-block;
+    box-shadow: 4px 4px #676767;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+
+    @variant hover {
+      @apply bg-primary-600;
+      transform: translate(-2px, -2px);
+    }
+    @variant active {
+      @apply bg-secondary-500;
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px #676767;
+    }
+  }
 }
