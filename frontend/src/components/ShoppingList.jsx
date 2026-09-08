@@ -1,7 +1,16 @@
+//TODO: Add functionality to mark items as done and update the list status accordingly.
+//TODO: Implement tanstack virtual for the list
+import { memo } from "react";
 import ActiveStatus from "./fragments/ActiveStatus";
 
 const ShoppingList = (listData) => {
   const { list } = listData;
+  console.log("ShoppingList was rendered at", new Date().toLocaleTimeString());
+
+  const handleMarkedDone = () => {
+    console.log("Marked as done");
+  };
+
   return (
     <div>
       <div className="flex flex-col justify-between mx-auto aspect-700/535 w-full max-w-175 rounded-lg bg-neutral-100 shadow-pop">
@@ -15,9 +24,9 @@ const ShoppingList = (listData) => {
           <ActiveStatus status={list.status} />
         </div>
         <hr className="mb-2"></hr>
-        <div className="overflow-x-auto">
-          <table className="table-auto text-sm border-collapse border-spacing-0">
-            <thead>
+        <div className="max-h-72 overflow-y-auto overflow-x-auto">
+          <table className="w-full table-auto text-sm border-collapse border-spacing-0">
+            <thead className="sticky top-0 bg-neutral-100 z-10">
               <tr>
                 <th className="border-0 px-4 py-1 text-left">ITEMS</th>
                 <th className="border-0 px-2 py-1 text-center">QUANTITY</th>
@@ -58,7 +67,10 @@ const ShoppingList = (listData) => {
               .toFixed(2)}
           </span>
         </div>
-        <div className="btn-primary text-sm rounded-lg mx-auto mt-2 mb-6 cursor-pointer select-none">
+        <div
+          className="btn-primary text-sm rounded-lg mx-auto mt-2 mb-6 cursor-pointer select-none"
+          onClick={handleMarkedDone}
+        >
           Mark as done
         </div>
       </div>
@@ -66,4 +78,4 @@ const ShoppingList = (listData) => {
   );
 };
 
-export default ShoppingList;
+export default memo(ShoppingList);
