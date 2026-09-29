@@ -6,9 +6,10 @@ body {
 }
 
 @theme {
-  --color-neutral-950: #121212;
   --color-neutral-100: #d9d9d9;
+  --color-neutral-200: #b3b3b3;
   --color-neutral-500: #676767;
+  --color-neutral-950: #121212;
 
   --color-primary-50: #fff8f9;
   --color-primary-100: #fef1f2;
@@ -82,6 +83,38 @@ body {
 
     @variant hover {
       @apply bg-primary-600;
+      transform: translate(-2px, -2px);
+    }
+    @variant active {
+      @apply bg-secondary-500;
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px #676767;
+    }
+  }
+
+  .btn-navbar {
+    @apply text-black text-xl font-bold h-full flex items-center px-2 border-b-2 border-transparent;
+
+    @variant hover {
+      border-bottom: 4px solid #f6777e;
+    }
+    @variant active {
+      transform: translateY(-2px);
+    }
+  }
+  .btn-navbar.active {
+    border-bottom: 4px solid #f6777e;
+  }
+
+  .shopping-list-preview {
+    @apply bg-neutral-100 text-neutral-950 p-5 rounded-xl min-w-fit flex flex-row gap-10 justify-between items-center cursor-pointer;
+    box-shadow: 4px 4px #676767;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+
+    @variant hover {
+      @apply bg-neutral-200;
       transform: translate(-2px, -2px);
     }
     @variant active {
