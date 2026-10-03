@@ -15,7 +15,7 @@ const ShoppingListPreview = ({ shoppingList, onClick }) => {
       <div className="flex flex-row items-center justify-center gap-1">
         <CircularProgressBar progress={50} />
         <span
-          className="material-symbols-outlined"
+          className="material-symbols-outlined select-none"
           style={{
             fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48",
             fontSize: "5rem",

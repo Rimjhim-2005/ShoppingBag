@@ -4,6 +4,13 @@ import { memo } from "react";
 import ActiveStatus from "./fragments/ActiveStatus";
 
 const ShoppingList = (listData) => {
+  if (!listData || !listData.list) {
+    console.error(
+      "ShoppingList component received invalid listData:",
+      listData,
+    );
+    return null;
+  }
   const { list } = listData;
   console.log("ShoppingList was rendered at", new Date().toLocaleTimeString());
 
@@ -13,8 +20,8 @@ const ShoppingList = (listData) => {
 
   return (
     <div>
-      <div className="flex flex-col justify-between mx-auto aspect-700/535 w-full max-w-175 rounded-lg bg-neutral-100 shadow-pop">
-        <div className="flex justify-between gap-6 p-3 items-center">
+      <div className="flex flex-col justify-between mx-auto aspect-700/535 w-full max-w-175 rounded-xl bg-neutral-100 shadow-pop">
+        <div className="flex justify-between gap-6 p-3 items-center border-b border-neutral-950">
           <div className="border rounded-full text-sm py-2 px-3">
             <span>Edit</span>
           </div>
@@ -23,8 +30,8 @@ const ShoppingList = (listData) => {
           </div>
           <ActiveStatus status={list.status} />
         </div>
-        <hr className="mb-2"></hr>
-        <div className="max-h-72 overflow-y-auto overflow-x-auto">
+
+        <div className="max-h-72 overflow-y-auto overflow-x-auto p-4">
           <table className="w-full table-auto text-sm border-collapse border-spacing-0">
             <thead className="sticky top-0 bg-neutral-100 z-10">
               <tr>
