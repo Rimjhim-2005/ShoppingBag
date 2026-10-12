@@ -12,7 +12,7 @@ module.exports.signup = async (req, res) => {
 
     const user = await User.create({ username, email, password });
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
 
@@ -23,7 +23,7 @@ module.exports.signup = async (req, res) => {
 
     res.status(201).json({
       message: "User created successfully",
-      user: { id: newUser._id, username: newUser.username },
+      user: { id: user._id, username: user.username },
     });
   } catch (error) {
     console.error(error);
@@ -49,6 +49,11 @@ module.exports.login = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({
+      message: "Login successful",
+      user: { id: user._id, username: user.username },
     });
   } catch (error) {
     console.error(error);

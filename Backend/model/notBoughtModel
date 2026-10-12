@@ -11,7 +11,7 @@ const notBoughtSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    quantity: Number,
+    quantity: String,
     price: Number,
     isBought: {
       type: Boolean,

@@ -20,7 +20,7 @@ module.exports.getNotBoughtPool = async (req, res) => {
     const items = await NotBoughtItem.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
-    res.status(200).json(notBoughtItems);
+    res.status(200).json(items);
   } catch (err) {
     res
       .status(500)
