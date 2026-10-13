@@ -5,8 +5,13 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantity: Number,
+<<<<<<< Updated upstream
+  quantity: { type: Number, default: 0 },
+  price: { type: Number, default: null },
+=======
+  quantity: String,
   price: Number,
+>>>>>>> Stashed changes
   isBought: {
     type: Boolean,
     default: false,
@@ -15,10 +20,19 @@ const itemSchema = new mongoose.Schema({
 
 const shoppingListSchema = new mongoose.Schema(
   {
+    listName: {
+      type: String,
+      required: true,
+      default: "Shopping List",
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    listName: {
+      type: String,
+      default: "My Shopping List",
     },
     items: [itemSchema],
     status: {

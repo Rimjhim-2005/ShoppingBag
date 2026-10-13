@@ -1,4 +1,4 @@
-const List = require("../models/listModel");
+const List = require("../model/listModel");
 const NotBoughtItem = require("../model/notBoughtModel");
 
 module.exports.getCompletedLists = async (req, res) => {
@@ -20,7 +20,7 @@ module.exports.getNotBoughtPool = async (req, res) => {
     const items = await NotBoughtItem.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
-    res.status(200).json(notBoughtItems);
+    res.status(200).json(items);
   } catch (err) {
     res
       .status(500)
@@ -127,13 +127,11 @@ module.exports.getTotalSpendings = async (req, res) => {
       0,
     );
 
-    res
-      .status(200)
-      .json({
-        completedTotal,
-        extraTotal,
-        grandTotal: completedTotal + extraTotal,
-      });
+    res.status(200).json({
+      completedTotal,
+      extraTotal,
+      grandTotal: completedTotal + extraTotal,
+    });
   } catch (err) {
     res.status(500).json({
       message: "Error calculating total spendings",
