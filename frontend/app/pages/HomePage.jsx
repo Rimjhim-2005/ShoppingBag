@@ -10,8 +10,8 @@ const HomePage = () => {
   const handleListPreview = (list) => setSelectedList(list);
 
   return (
-    <>
-      <div className="flex flex-col gap-4 w-fit">
+    <div>
+      <div className="flex flex-col gap-4 w-fit mx-auto">
         {mockShoppingLists.map((list) => (
           <ShoppingListPreview
             key={list._id}
@@ -29,7 +29,7 @@ const HomePage = () => {
           {selectedList && <ShoppingList list={selectedList} />}
         </div>
       </Modal>
-    </>
+    </div>
   );
 };
 
