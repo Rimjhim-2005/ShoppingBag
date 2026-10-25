@@ -65,3 +65,52 @@ module.exports.logout = (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ message: "Logged out" });
 };
+
+module.exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select("-password");
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports.updateProfile = async (req, res) => {
+  try {
+    const { username, email } = req.body;
+    const updates = {};
+
+    if (username) {
+      const existing = await User.findOne({
+        username,
+        _id: { $ne: req.user._id },
+      });
+      if (existing) {
+        return res.status(400).json({ message: "Username already taken" });
+      }
+      updates.username = username;
+    }
+
+    if (email) {
+      const existing = await User.findOne({
+        email,
+        _id: { $ne: req.user._id },
+      });
+      if (existing) {
+        return res.status(400).json({ message: "Email already in use" });
+      }
+      updates.email = email;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, updates, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
+    res.status(200).json({ message: "Profile updated", user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
